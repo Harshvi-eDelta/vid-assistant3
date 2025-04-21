@@ -1,8 +1,7 @@
-# best for training less chnage in google image
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
-from data import LandmarkDataset,get_transforms
+from data import LandmarkDataset, get_transforms
 from model import LandmarkCNN
 from tqdm import tqdm
 import os
@@ -10,8 +9,8 @@ import os
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Paths
-img_dir = "/Users/edelta076/Desktop/Project_VID_Assistant3/dataset/original_jpg"
-t7_dir = "/Users/edelta076/Desktop/Project_VID_Assistant3/dataset/t7"
+img_dir = "/Users/edelta076/Desktop/Project_VID_Assistant/new_dataset/original_jpg_copy"
+t7_dir = "/Users/edelta076/Desktop/Project_VID_Assistant/new_dataset/t7"
 save_path = "best_model.pth"
 
 # Dataset and Loader
@@ -25,7 +24,8 @@ optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
 best_loss = float("inf")
 
-epochs = 30
+# epochs = 30
+epochs = 40
 
 for epoch in range(epochs):
     model.train()

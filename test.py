@@ -15,7 +15,7 @@ model.to(device)
 model.eval()
 
 # Load custom image
-image_path = "/Users/edelta076/Desktop/Project_VID_Assistant/face_images/fimg2.jpg"
+image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/4.jpg"         # 1,3,4,5,7,8,10,11,12,13,14,16,18.04
 original_img = cv2.imread(image_path)
 
 if original_img is None:

@@ -25,7 +25,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 best_loss = float("inf")
 
 # epochs = 30
-epochs = 40
+epochs = 45
 
 for epoch in range(epochs):
     model.train()

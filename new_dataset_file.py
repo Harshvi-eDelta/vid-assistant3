@@ -1,10 +1,10 @@
-import os
+'''import os
 import cv2
 import dlib
 import torch
 
 # Define paths
-'''input_image_folder = "/Users/edelta076/Desktop/Project_VID_Assistant3/dataset/new_original_jpg"  # Folder containing the Google Images
+input_image_folder = "/Users/edelta076/Desktop/Project_VID_Assistant3/dataset/new_original_jpg"  # Folder containing the Google Images
 output_t7_folder = "/Users/edelta076/Desktop/Project_VID_Assistant3/dataset/new_pt"    # Folder where the .t7 files will be saved
 
 # Make sure the output folder exists
@@ -17,7 +17,6 @@ predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")  # Dow
 def get_landmarks(image):
     # Convert the image to grayscale
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    
     # Detect faces in the image
     faces = detector(gray)
     
@@ -43,6 +42,9 @@ for image_name in os.listdir(input_image_folder):
         
         # Read the image
         image = cv2.imread(image_path)
+        if image is None:
+            print(f"Warning: Failed to load image {image_path}, skipping.")
+            continue
         
         # Get the landmarks for the image
         landmarks = get_landmarks(image)
@@ -92,8 +94,7 @@ for pt_file_name in os.listdir(input_pt_folder):
         convert_pt_to_t7(pt_file_path, t7_file_path)'''
 
 # to view generated landmarks on google images
-
-import os
+'''import os
 import cv2
 import h5py
 import matplotlib.pyplot as plt
@@ -110,24 +111,20 @@ def load_landmarks_from_t7(t7_file_path):
     return landmarks
 
 def visualize_landmarks(image_path, landmarks):
-    # Debugging: Print the image path to verify it exists
     print(f"Loading image from: {image_path}")
     
-    # Read the image
     image = cv2.imread(image_path)
-
     if image is None:
         print(f"Error: Unable to load image at {image_path}. Please check the path.")
         return
-    
-    # Convert from BGR to RGB for proper display in matplotlib
+
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    # Plot the image
+    plt.figure(figsize=(5, 5))
     plt.imshow(image_rgb)
-    plt.scatter(landmarks[:, 0], landmarks[:, 1], c='red', s=10)  # Overlay landmarks as red dots
+    plt.scatter(landmarks[:, 0], landmarks[:, 1], c='red', s=10)
     plt.title(f"Landmarks on {os.path.basename(image_path)}")
-    plt.axis('off')  # Hide axes
+    plt.axis('off')
     plt.show()
 
 # Process each .t7 file in the input folder
@@ -140,7 +137,7 @@ for t7_file_name in os.listdir(input_t7_folder):
         
         # Visualize the image with landmarks
         landmarks = load_landmarks_from_t7(t7_file_path)
-        visualize_landmarks(image_path, landmarks)
+        visualize_landmarks(image_path, landmarks)'''
 
 
 '''import h5py

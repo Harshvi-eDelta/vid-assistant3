@@ -61,8 +61,24 @@ class LandmarkDataset(Dataset):
         self.img_dir = img_dir
         self.t7_dir = t7_dir
         self.is_google = is_google
-        self.image_files = sorted([f for f in os.listdir(img_dir) if f.endswith(('.jpg', '.png'))])
         self.transform = transform
+
+        self.image_files = []
+        
+        # Filter images that have corresponding t7
+        for f in sorted(os.listdir(img_dir)):
+            if f.endswith(('.jpg', '.png')):
+                if self.is_google:
+                    t7_file_name = f"{os.path.splitext(f)[0]}_landmarks_landmarks.t7"
+                else:
+                    t7_file_name = os.path.splitext(f)[0] + '.t7'
+
+                t7_path = os.path.join(t7_dir, t7_file_name)
+                
+                if os.path.exists(t7_path):
+                    self.image_files.append(f)
+                else:
+                    print(f"Skipping {f} because {t7_file_name} not found.")
 
     def __len__(self):
         return len(self.image_files)
@@ -72,14 +88,11 @@ class LandmarkDataset(Dataset):
         image_path = os.path.join(self.img_dir, img_name)
         
         if self.is_google:
-            t7_file_name = f"{img_name.split('.')[0]}_landmarks_landmarks.t7"
+            t7_file_name = f"{os.path.splitext(img_name)[0]}_landmarks_landmarks.t7"
         else:
             t7_file_name = os.path.splitext(img_name)[0] + '.t7'
 
         t7_path = os.path.join(self.t7_dir, t7_file_name)
-
-        # print(f"Trying to load image: {image_path}")
-        # print(f"Trying to load landmark file: {t7_path}")
 
         # Load image
         image = Image.open(image_path).convert("RGB")
@@ -87,17 +100,15 @@ class LandmarkDataset(Dataset):
 
         # Load landmarks
         if self.is_google:
-            # ➔ load using h5py
             with h5py.File(t7_path, 'r') as f:
-                landmark = np.array(f['landmarks'])  # your dataset inside
+                landmark = np.array(f['landmarks'])
         else:
-            # ➔ old .t7 loading
             landmark = torchfile.load(t7_path)
             landmark = np.array(landmark)
 
         landmark = landmark.astype(np.float32)
 
-        # Normalize landmarks by original image size
+        # Normalize landmarks
         landmark[:, 0] /= original_width
         landmark[:, 1] /= original_height
 
@@ -105,8 +116,9 @@ class LandmarkDataset(Dataset):
         if self.transform:
             image = self.transform(image)
 
-        landmark = torch.tensor(landmark, dtype=torch.float32).view(-1)  # flatten to (136,)
+        landmark = torch.tensor(landmark, dtype=torch.float32).view(-1)  # flatten (68x2) -> (136,)
         return image, landmark
+
 
 def get_transforms():
     return transforms.Compose([

@@ -65,12 +65,12 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load model
 model = LandmarkCNN()
-model.load_state_dict(torch.load("best_model.pth", map_location=device))
+model.load_state_dict(torch.load("best_model_1.pth", map_location=device))
 model.to(device)
 model.eval()
 
 # Load custom image (Ensure this image exists in your directory)
-image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/fimg1.jpg"         # Your custom image
+image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/fimg25.jpg"         # 3,4,5,7,8,12,13,14,15,19,041,048,060,23,24
 original_img = cv2.imread(image_path)
 
 if original_img is None:

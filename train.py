@@ -69,7 +69,7 @@ original_t7_dir = "/Users/edelta076/Desktop/Project_VID_Assistant3/dataset/t7"
 google_img_dir = "/Users/edelta076/Desktop/Project_VID_Assistant3/dataset/new_original_jpg"  # path for Google images
 google_t7_dir = "/Users/edelta076/Desktop/Project_VID_Assistant3/dataset/new_t7"  # path for Google .t7 files
 
-save_path = "best_model_1.pth"
+save_path = "best_model_2.pth"
 
 # Initialize datasets for both the original and Google image datasets
 original_dataset = LandmarkDataset(img_dir=original_img_dir, t7_dir=original_t7_dir, transform=get_transforms())
@@ -77,7 +77,6 @@ google_dataset = LandmarkDataset(img_dir=google_img_dir, t7_dir=google_t7_dir, i
 
 print(f"Original dataset size: {len(original_dataset)}")
 print(f"Google dataset size: {len(google_dataset)}")
-
 
 # Combine both datasets into one
 combined_dataset = ConcatDataset([original_dataset, google_dataset])
@@ -88,12 +87,13 @@ train_loader = DataLoader(combined_dataset, batch_size=16, shuffle=True)
 # Model, Loss, Optimizer
 model = LandmarkCNN().to(device)
 criterion = nn.MSELoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+# optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
 
 best_loss = float("inf")
 
 # epochs = 30
-epochs = 45
+epochs = 50
 
 for epoch in range(epochs):
     model.train()

@@ -72,10 +72,10 @@ model.eval()
 # Load custom image (Ensure this image exists in your directory)
 image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/image00801.jpg"         # 3,4,5,7,8,12,13,14,15,18,19,041,048,060,23,24,27,28,29       
 original_img = cv2.imread(image_path)                                                        # 1,14,_1,4,5,7,9,11,12,13,14,16,17,18,19,24,25,_1,041,044,0133,27,28
-                                                                                             # _1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,23,24,25,871,041,042,  044,060,801,27,28
-if original_img is None:                                                                     # 1,2,4,5,7,8,10,11,12,13,14,15,16,17,18,19,23,24,27,28,29,_1,41,42,44
-    raise FileNotFoundError(f"Image not found at path: {image_path}")
-
+                                                                                             
+if original_img is None:                                                                     
+    raise FileNotFoundError(f"Image not found at path: {image_path}")    
+                                                                                                # 1,3,4,5,6,7,8,9,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,04,041,044,051,081,088,0520
 # Convert BGR (OpenCV) to RGB
 original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
 

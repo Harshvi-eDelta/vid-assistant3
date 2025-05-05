@@ -77,7 +77,8 @@ if original_img is None:
     raise FileNotFoundError(f"Image not found at path: {image_path}")    
                                                                                                 # 1,3,4,5,6,7,8,9,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,04,041,044,051,081,088,0520
 # Convert BGR (OpenCV) to RGB
-original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
+original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)                                    # _1,4,6,9,10,11,12,14,15,16,17,18,19,21,23,24,27,28,29,30,041,042,044,048,
+                                                                                                  # 049,051,052,056,060,0520
 
 # Resize for visualization later
 resized_img = cv2.resize(original_img, (256, 256))

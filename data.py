@@ -131,7 +131,7 @@ def get_transforms(train=True):
     if train:
         return transforms.Compose([
             transforms.Resize((256, 256)),
-            #transforms.RandomHorizontalFlip(p=0.5),
+            transforms.RandomHorizontalFlip(p=0.5),
             #transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.05),
             transforms.RandomRotation(degrees=10),
             transforms.ToTensor(),

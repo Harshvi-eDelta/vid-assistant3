@@ -72,8 +72,8 @@ google_t7_dir = "/Users/edelta076/Desktop/Project_VID_Assistant3/dataset/new_t7"
 save_path = "best_model_2.pth"
 
 # Initialize datasets for both the original and Google image datasets
-original_dataset = LandmarkDataset(img_dir=original_img_dir, t7_dir=original_t7_dir, transform=get_transforms(train=True))
-google_dataset = LandmarkDataset(img_dir=google_img_dir, t7_dir=google_t7_dir, is_google=True, transform=get_transforms(train=True))
+original_dataset = LandmarkDataset(img_dir=original_img_dir, t7_dir=original_t7_dir, transform=get_transforms())
+google_dataset = LandmarkDataset(img_dir=google_img_dir, t7_dir=google_t7_dir, is_google=True, transform=get_transforms())
 
 print(f"Original dataset size: {len(original_dataset)}")
 print(f"Google dataset size: {len(google_dataset)}")

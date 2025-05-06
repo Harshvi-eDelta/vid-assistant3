@@ -70,24 +70,24 @@ model.to(device)
 model.eval()
 
 # Load custom image (Ensure this image exists in your directory)
-image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/image00801.jpg"         # 3,4,5,7,8,12,13,14,15,18,19,041,048,060,23,24,27,28,29       
+image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/4.jpg"         # 3,4,5,7,8,12,13,14,15,18,19,041,048,060,23,24,27,28,29       
 original_img = cv2.imread(image_path)                                                        # 1,14,_1,4,5,7,9,11,12,13,14,16,17,18,19,24,25,_1,041,044,0133,27,28
                                                                                              
 if original_img is None:                                                                     
     raise FileNotFoundError(f"Image not found at path: {image_path}")    
-                                                                                                # 1,3,4,5,6,7,8,9,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,04,041,044,051,081,088,0520
+                                                                                                
 # Convert BGR (OpenCV) to RGB
 original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)                                    # _1,4,6,9,10,11,12,14,15,16,17,18,19,21,23,24,27,28,29,30,041,042,044,048,
                                                                                                   # 049,051,052,056,060,0520
 
 # Resize for visualization later
-resized_img = cv2.resize(original_img, (256, 256))
+resized_img = cv2.resize(original_img, (256, 256))                # 1,14,_1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,23,24,25,27,28,29,30,042,046,048,060,081,0520
 
 # Convert to PIL for transform
 pil_img = Image.fromarray(original_img)
 
 # Apply transform (resize to 256x256 and normalization)
-transform = get_transforms(train=False)
+transform = get_transforms()
 input_tensor = transform(pil_img).unsqueeze(0).to(device)
 
 # Predict landmarks

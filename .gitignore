@@ -6,5 +6,6 @@ face_images/
 best_model.pth
 best_model_1.pth
 best_model_2.pth
+best_model_3.pth
 requirements.txt
 shape_predictor_68_face_landmarks.dat

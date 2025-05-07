@@ -65,7 +65,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load model
 model = LandmarkCNN()
-model.load_state_dict(torch.load("best_model_2.pth", map_location=device,weights_only=True))
+model.load_state_dict(torch.load("best_model_3.pth", map_location=device,weights_only=True))
 model.to(device)
 model.eval()
 
@@ -77,8 +77,7 @@ if original_img is None:
     raise FileNotFoundError(f"Image not found at path: {image_path}")    
                                                                                                 
 # Convert BGR (OpenCV) to RGB
-original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)                                    # _1,4,6,9,10,11,12,14,15,16,17,18,19,21,23,24,27,28,29,30,041,042,044,048,
-                                                                                                  # 049,051,052,056,060,0520
+original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)    # _1,4,5,10,11,12,13,15,16,18,23,24,27,28,29,30,041,046,048                    
 
 # Resize for visualization later
 resized_img = cv2.resize(original_img, (256, 256))                # 1,14,_1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,23,24,25,27,28,29,30,042,046,048,060,081,0520

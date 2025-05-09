@@ -53,7 +53,7 @@ plt.title("Predicted Landmarks")
 plt.axis("off")
 plt.show()'''
 
-import torch
+'''import torch
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -70,11 +70,11 @@ model.to(device)
 model.eval()
 
 # Load custom image (Ensure this image exists in your directory)
-image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/fimg9.jpg"         # 3,4,5,7,8,12,13,14,15,18,19,041,048,060,23,24,27,28,29       
+image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/image20.jpg"         # 3,4,5,7,8,12,13,14,15,18,19,041,048,060,23,24,27,28,29       
 original_img = cv2.imread(image_path)                                                        # 1,14,_1,4,5,7,9,11,12,13,14,16,17,18,19,24,25,_1,041,044,0133,27,28
                                                                                              
 if original_img is None:                                                                     
-    raise FileNotFoundError(f"Image not found at path: {image_path}")    
+    raise FileNotFoundError(f"Image not found at path: {image_path}")    # 1,_1,1,4,5,11,12,13,14,15,18,19,27,28,29,30,3,4
                                                                                                 
 # Convert BGR (OpenCV) to RGB
 original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)    # _1,4,5,10,11,12,13,15,16,18,23,24,27,28,29,30,041,046,048                    
@@ -106,6 +106,49 @@ for (x, y) in output:
 # Show image with landmarks
 plt.figure(figsize=(4,4))
 plt.imshow(resized_img)
+plt.savefig("abc")
+plt.title("Predicted Landmarks")
+plt.axis("off")
+plt.show()'''
+
+
+# heatmap - multiple stage
+
+import torch
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+from PIL import Image
+from model import MultiStageCNN
+from data import get_transforms
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = MultiStageCNN(stages=5)
+model.load_state_dict(torch.load("best_heatmap_model.pth", map_location=device))
+model.to(device).eval()
+
+image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/fimg1.jpg"
+original_img = cv2.imread(image_path)
+original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
+resized_img = cv2.resize(original_img, (256, 256))
+pil_img = Image.fromarray(original_img)
+
+input_tensor = get_transforms()(pil_img).unsqueeze(0).to(device)
+with torch.no_grad():
+    heatmaps = model(input_tensor)[-1].squeeze(0).cpu().numpy()  # Final stage
+
+coords = []
+for hmap in heatmaps:
+    y, x = np.unravel_index(np.argmax(hmap), hmap.shape)
+    coords.append((x * 4, y * 4))  # Scale up from 64 to 256
+
+for x, y in coords:
+    cv2.circle(resized_img, (int(x), int(y)), 2, (0, 255, 0), -1)
+
+plt.figure(figsize = (4,4))
+plt.imshow(resized_img)
 plt.title("Predicted Landmarks")
 plt.axis("off")
 plt.show()
+
+

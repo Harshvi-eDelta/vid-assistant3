@@ -54,14 +54,28 @@ class MultiStageCNN(nn.Module):
             HeatmapRefineBlock(in_channels=128 if i == 0 else 128 + 68) for i in range(stages)
         ])
 
+    # def forward(self, x):
+    #     feat = self.stem(x)
+    #     heatmaps = torch.zeros(x.size(0), 68, 64, 64).to(x.device)
+    #     outputs = []
+
+    #     for i in range(self.stages):
+    #         inp = feat if i == 0 else torch.cat([feat, heatmaps], dim=1)
+    #         heatmaps = self.refine_blocks[i](inp)
+    #         outputs.append(heatmaps)
+
+    #     return outputs  # List of 5 stages
+
     def forward(self, x):
-        feat = self.stem(x)
+        feat = self.stem(x)  # 128x64x64
         heatmaps = torch.zeros(x.size(0), 68, 64, 64).to(x.device)
         outputs = []
 
         for i in range(self.stages):
-            inp = feat if i == 0 else torch.cat([feat, heatmaps], dim=1)
+            inp = feat if i == 0 else torch.cat([feat, heatmaps], dim=1)  # All 64x64
             heatmaps = self.refine_blocks[i](inp)
-            outputs.append(heatmaps)
+            outputs.append(F.interpolate(heatmaps, size=(128, 128), mode='bilinear', align_corners=False))
 
-        return outputs  # List of 5 stages
+        return outputs  # All are 68×128×128
+
+

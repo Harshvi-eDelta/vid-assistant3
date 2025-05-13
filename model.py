@@ -74,7 +74,7 @@ class MultiStageCNN(nn.Module):
         for i in range(self.stages):
             inp = feat if i == 0 else torch.cat([feat, heatmaps], dim=1)  # All 64x64
             heatmaps = self.refine_blocks[i](inp)
-            outputs.append(F.interpolate(heatmaps, size=(128, 128), mode='bilinear', align_corners=False))
+            outputs.append(F.interpolate(heatmaps, size=(128, 128), mode='bilinear', align_corners=True))  # align_corners = False
 
         return outputs  # All are 68×128×128
 

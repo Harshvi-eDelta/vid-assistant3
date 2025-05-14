@@ -127,7 +127,7 @@ model = MultiStageCNN(stages=5)
 model.load_state_dict(torch.load("best_heatmap_model_1.pth", map_location=device))
 model.to(device).eval()
 
-image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/fimg2.jpg"    # _1,4,27,1,2,image15,i16,i17,i20
+image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/4.jpg"    # _1,4,27,1,2,image15,i16,i17,i20
 original_img = cv2.imread(image_path)
 original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
 resized_img = cv2.resize(original_img, (256, 256))
@@ -140,7 +140,7 @@ with torch.no_grad():
 coords = []
 for hmap in heatmaps:
     y, x = np.unravel_index(np.argmax(hmap), hmap.shape)
-    coords.append((x * 4, y * 4))  # Scale up from 64 to 256
+    coords.append((x * 2, y * 2))  # Scale up from 64 to 256        # x * 4 and y * 4 causing and error !
 print()
 print(coords)
 print()

@@ -11,4 +11,10 @@ best_heatmap_model.pth
 best_heatmap_model_1.pth
 requirements.txt
 abc.png
+output_depth_map_1.png
+output_depth_map_4.png
+output_with_landmarks_1.jpg
+output_with_landmarks_4.jpg
 shape_predictor_68_face_landmarks.dat
+
+script_one.py

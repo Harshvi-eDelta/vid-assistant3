@@ -166,6 +166,6 @@ for epoch in range(50):
     print(f"Epoch {epoch} - Loss: {avg_loss:.4f}")
     if avg_loss < best_loss:
         best_loss = avg_loss
-        torch.save(model.state_dict(), "best_heatmap_model_1.pth")
+        torch.save(model.state_dict(), "best_heatmap_model_2.pth")
         print("Saved Best Heatmap Model")
 

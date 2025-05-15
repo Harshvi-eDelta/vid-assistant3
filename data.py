@@ -196,10 +196,22 @@ def generate_heatmaps(landmarks, height=128, width=128, sigma=2):
     heatmaps = np.zeros((num_landmarks, height, width), dtype=np.float32)
 
     for i, (x, y) in enumerate(landmarks):
-        if x < 0 or y < 0 or x >= 1 or y >= 1:
+        # if x < 0 or y < 0 or x >= 1 or y >= 1:
+        #     continue
+        # x = int(x * width)
+        # y = int(y * height)
+
+        # Clip normalized landmarks to [0, 1]
+        x = np.clip(x, 0, 1)
+        y = np.clip(y, 0, 1)
+
+        # Convert to heatmap scale
+        x = int(round(x * width))
+        y = int(round(y * height))
+
+        # Ensure coordinates are inside the image
+        if x < 0 or y < 0 or x >= width or y >= height:
             continue
-        x = int(x * width)
-        y = int(y * height)
 
         heatmap = np.zeros((height, width), dtype=np.float32)
         tmp_size = sigma * 3

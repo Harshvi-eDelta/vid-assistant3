@@ -9,6 +9,7 @@ best_model_2.pth
 best_model_3.pth
 best_heatmap_model.pth
 best_heatmap_model_1.pth
+best_heatmap_model_2.pth
 requirements.txt
 abc.png
 output_depth_map_1.png

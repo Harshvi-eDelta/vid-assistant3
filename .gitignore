@@ -19,3 +19,4 @@ output_with_landmarks_4.jpg
 shape_predictor_68_face_landmarks.dat
 
 script_one.py
+predict_landmarks.py

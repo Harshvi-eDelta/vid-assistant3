@@ -127,7 +127,7 @@ model = MultiStageCNN(stages=5)
 model.load_state_dict(torch.load("best_heatmap_model_2.pth", map_location=device))
 model.to(device).eval()
 
-image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/fimg46.jpg"    # _1,4,27,1,2,image15,i16,i17,i20
+image_path = "/Users/edelta076/Desktop/Project_VID_Assistant3/face_images/fimg37.jpg"    # _1,4,27,1,2,image15,i16,i17,i20
 original_img = cv2.imread(image_path)                                               
 original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)            # 1,27
 resized_img = cv2.resize(original_img, (256, 256))
@@ -148,7 +148,6 @@ print()
 
 for x, y in coords:
     cv2.circle(resized_img, (int(x), int(y)), 2, (0, 255, 0), -1)
-
 
 plt.figure(figsize = (4,4))
 plt.imshow(resized_img)

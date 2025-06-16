@@ -62,7 +62,7 @@ class MultiStageCNN(nn.Module):
     #     for i in range(self.stages):
     #         inp = feat if i == 0 else torch.cat([feat, heatmaps], dim=1)
     #         heatmaps = self.refine_blocks[i](inp)
-    #         outputs.append(heatmaps)
+    #         outputs.append(heatmaps) 
 
     #     return outputs  # List of 5 stages
 

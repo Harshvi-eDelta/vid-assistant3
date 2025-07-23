@@ -11,7 +11,9 @@ model = MultiStageCNN(stages=5)
 model.load_state_dict(torch.load("best_heatmap_model_2.pth", map_location=device))
 model.to(device).eval()
 
-image_path = "./face_images/fimg25.jpg"    # 56,52,49,48,10,2,4
+#25,52, 
+
+image_path = "./face_images/me1.jpg"    # 56,52,49,48,10,2,4
 original_img = cv2.imread(image_path)                                               
 original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)            
 resized_img = cv2.resize(original_img, (256, 256))
